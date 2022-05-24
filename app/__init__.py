@@ -1,8 +1,7 @@
-import logging
-
 from telethon import TelegramClient
-
+import logging
 import config
+import app.handlers
 
 
 class Bot(TelegramClient):
@@ -14,8 +13,6 @@ class Bot(TelegramClient):
 bot = Bot('bot', config.API_ID, config.API_HASH)
 bot.parse_mode = 'HTML'
 logging.basicConfig(level=logging.INFO)
-
-import app.handlers
 
 
 async def start():
