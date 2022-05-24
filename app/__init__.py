@@ -1,7 +1,14 @@
-from telethon import TelegramClient
+import os
 import logging
-import config
-import app.handlers
+from dotenv import load_dotenv
+from telethon import TelegramClient
+
+
+load_dotenv()
+api_id = os.getenv('TELEGRAM_API_ID')
+api_hash = os.getenv('TELEGRAM_API_HASH')
+bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
+# print(api_id, api_hash, bot_token)
 
 
 class Bot(TelegramClient):
@@ -10,14 +17,17 @@ class Bot(TelegramClient):
         self.me = None
 
 
-bot = Bot('bot', config.API_ID, config.API_HASH)
+bot = Bot('bot', api_id, api_hash)
 bot.parse_mode = 'HTML'
 logging.basicConfig(level=logging.INFO)
 
 
+import app.handlers
+
+
 async def start():
     await bot.connect()
-    bot.me = await bot.sign_in(bot_token=config.BOT_TOKEN)
+    bot.me = await bot.sign_in(bot_token=bot_token)
     await bot.run_until_disconnected()
 
 
